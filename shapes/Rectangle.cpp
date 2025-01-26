@@ -15,12 +15,6 @@ namespace shape {
   
     void Rectangle::Draw(Painter& painter) const {
 
-        /*
-        QPen pen(Qt::black, 5, Qt::SolidLine, Qt::RoundCap, Qt::MiterJoin);
-        painter.setPen(pen);
-        painter.drawRect(QRectF(x, y, width, height));
-        */
-
         painter.DrawRect(*this);
     }
 
