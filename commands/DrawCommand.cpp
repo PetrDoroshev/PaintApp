@@ -11,9 +11,12 @@ void DrawCommand::Execute() {
 void DrawCommand::unExecute() {
 
     auto shape_to_remove_it = std::find(shapes.begin(), shapes.end(), created_shape);
+    auto shape_ptr = *shape_to_remove_it;
+    
     shapes.erase(shape_to_remove_it);
 
-    delete *(shape_to_remove_it);
+    delete shape_ptr;
+    shape_ptr = nullptr;
 }
 DrawCommand::~DrawCommand() = default;
 

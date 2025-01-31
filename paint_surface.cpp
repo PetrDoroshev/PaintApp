@@ -21,7 +21,9 @@ void PaintSurface::paintEvent(QPaintEvent *event) {
     qt_painter.fillRect(rect(), QBrush(Qt::white));
     
     for (auto shape: shapes) {
-        shape->Draw(painter);
+        
+        if (shape != nullptr)
+            shape->Draw(painter);
     }
     manipulator.Draw(painter);
 

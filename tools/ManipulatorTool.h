@@ -14,6 +14,7 @@ private:
     int prev_y = 0;
     bool is_click = true;
     bool ctrl_pressed = false;
+    shape::Manipulator manipulator = shape::Manipulator(nullptr);
     shape::ShapeGroup shape_group = shape::ShapeGroup();
 
 public:

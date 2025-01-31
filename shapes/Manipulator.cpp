@@ -18,7 +18,7 @@ namespace shape {
 
     void Manipulator::setAttachedShape(Shape *attachedShape) {
         attached_shape = attachedShape;
-        update();
+        Update();
     }
 
     void Manipulator::Draw(Painter& painter) const {
@@ -38,7 +38,7 @@ namespace shape {
 
     }
 
-    void Manipulator::update() {
+    void Manipulator::Update() {
 
         if (attached_shape == nullptr) {
             return;
@@ -72,11 +72,11 @@ namespace shape {
         }
     }
 
-    void Manipulator::drag(int dx, int dy) {
+    void Manipulator::Drag(int dx, int dy) {
 
         int dw, dh;
 
-        switch (selectedControl) {
+        switch (selected_control) {
 
             case(TopLeft):
                 dw = -dx; dh = -dy;
@@ -131,25 +131,25 @@ namespace shape {
         attached_shape->setPos(attached_shape->getX() + dx, attached_shape->getY() + dy);
         attached_shape->setSize(std::fmax(10, new_width), std::fmax(10, new_height));
 
-        update();
+        Update();
     }
 
-    void Manipulator::touch(int x, int y) {
+    void Manipulator::Touch(int x, int y) {
 
-        selectedControl = None;
+        selected_control = None;
         for (auto& control: controls) {
 
             if (control.second.Touch(x, y)) {
-                selectedControl = control.first;
+                selected_control = control.first;
             }
         }
 
-        if (selectedControl == None) {
+        if (selected_control == None) {
             attached_shape = nullptr;
         }
     }
 
     controlType Manipulator::getSelectedControl() const {
-        return selectedControl;
+        return selected_control;
     }
 } // shape

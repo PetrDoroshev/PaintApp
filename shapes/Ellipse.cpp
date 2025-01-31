@@ -10,12 +10,6 @@ namespace shape {
 
     void Ellipse::Draw(Painter& painter) const {
            
-        /*
-        QPen pen(Qt::black, 5, Qt::SolidLine, Qt::RoundCap, Qt::MiterJoin);
-        painter.setPen(pen);
-        painter.drawEllipse(QRectF(x, y, width, height));
-        */
-
         painter.DrawEllipse(*this);
     }
 

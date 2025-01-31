@@ -13,7 +13,7 @@ void ManipulatorTool::onMousePress(QMouseEvent *event) {
         int y = event->pos().y();
 
         prev_x = x, prev_y = y;
-        paintSurface->manipulator.touch(x, y);
+        paintSurface->manipulator.Touch(x, y);
 
         shape::Shape* attached_shape;
 
@@ -41,7 +41,7 @@ void ManipulatorTool::onMouseMove(QMouseEvent *event) {
 
     if (event->buttons() == Qt::MouseButton::LeftButton) {
 
-        paintSurface->manipulator.drag(event->pos().x() - prev_x, event->pos().y() - prev_y);
+        paintSurface->manipulator.Drag(event->pos().x() - prev_x, event->pos().y() - prev_y);
 
         prev_x = event->pos().x();
         prev_y = event->pos().y();

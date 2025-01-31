@@ -14,13 +14,13 @@ namespace shape {
 
         int control_size = 5;
         Shape* attached_shape = nullptr;
-        controlType selectedControl = None;
+        controlType selected_control = None;
         std::unordered_map<controlType, Rectangle> controls;
 
-        void update();
+        void Update();
         void updateControls();
 
-
+    
     public:
 
         explicit Manipulator(Shape *attachedShape);
@@ -29,8 +29,8 @@ namespace shape {
         controlType getSelectedControl() const;
         void setAttachedShape(Shape *attachedShape);
 
-        void drag(int dx, int dy);
-        void touch(int x, int y);
+        void Drag(int dx, int dy);
+        void Touch(int x, int y);
         void Draw(Painter &painter) const override;
 
 
