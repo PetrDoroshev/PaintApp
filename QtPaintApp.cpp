@@ -2,7 +2,7 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 #include <QDockWidget>
-#include "paint_app.h"
+#include "QtPaintApp.h"
 #include "shapes/factory/ShapeFactory.h"
 #include "shapes/Rectangle.h"
 #include "shapes/Triangle.h"
@@ -10,7 +10,7 @@
 
 using namespace shape;
 
-paint_app::paint_app(QWidget *parent): QMainWindow(parent) {
+QtPaintApp::QtPaintApp(QWidget *parent): QMainWindow(parent) {
 
     setGeometry(100, 100, 640, 480);
     //setFocusPolicy(Qt::FocusPolicy::StrongFocus);
@@ -51,19 +51,18 @@ paint_app::paint_app(QWidget *parent): QMainWindow(parent) {
     add_custom_shape_act = new QAction("add_custom_shape_act", this);
     shape_context_menu->addAction(add_custom_shape_act);
 
-    connect(rectSelect, &QAction::triggered, this, &paint_app::setTool);
-    connect(triangleSelect, &QAction::triggered, this, &paint_app::setTool);
-    connect(ellipseSelect, &QAction::triggered, this, &paint_app::setTool);
-    connect(pointerSelect, &QAction::triggered, this, &paint_app::setTool);
-    connect(add_custom_shape_act, &QAction::triggered, this, &paint_app::addCustomShape);
+    connect(rectSelect, &QAction::triggered, this, &QtPaintApp::setTool);
+    connect(triangleSelect, &QAction::triggered, this, &QtPaintApp::setTool);
+    connect(ellipseSelect, &QAction::triggered, this, &QtPaintApp::setTool);
+    connect(pointerSelect, &QAction::triggered, this, &QtPaintApp::setTool);
+    connect(add_custom_shape_act, &QAction::triggered, this, &QtPaintApp::addCustomShape);
 
 }
 
-void paint_app::setTool() {
+void QtPaintApp::setTool() {
 
     auto* action = qobject_cast<QAction*>(sender());
     paintSurface->current_tool = name_tool_map[action->text().toStdString()];
-
 
     checkedAction->setChecked(false);
     checkedAction = action;
@@ -71,7 +70,7 @@ void paint_app::setTool() {
 
 }
 
-void paint_app::addCustomShape() {
+void QtPaintApp::addCustomShape() {
 
     auto manipulator_tool = dynamic_cast<ManipulatorTool*> (paintSurface->current_tool);
 
@@ -90,19 +89,19 @@ void paint_app::addCustomShape() {
 
             name_tool_map[label.toStdString()] = new DrawTool<ShapeGroup>(&paintSurface->canvas, commandManager, *attached_shape);
 
-            connect(customShapeSelect, &QAction::triggered, this, &paint_app::setTool);
+            connect(customShapeSelect, &QAction::triggered, this, &QtPaintApp::setTool);
         }
     }
 }
 
-void paint_app::contextMenuEvent(QContextMenuEvent *event) {
+void QtPaintApp::contextMenuEvent(QContextMenuEvent *event) {
 
     if (paintSurface->underMouse()) {
         shape_context_menu->exec(event->globalPos());
     }
 }
 
-void paint_app::keyPressEvent(QKeyEvent *event) {
+void QtPaintApp::keyPressEvent(QKeyEvent *event) {
 
     if (event->key() == Qt::Key::Key_Z && event->modifiers() == Qt::Modifier::CTRL) {
         commandManager->unExecuteCommand();

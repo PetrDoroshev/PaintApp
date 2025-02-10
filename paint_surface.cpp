@@ -52,6 +52,12 @@ void PaintSurface::keyReleaseEvent(QKeyEvent *event) {
     repaint();
 }
 
+void PaintSurface::resizeEvent(QResizeEvent* event)
+{
+    canvas.setWidth(event->size().width());
+    canvas.setHeight(event->size().height());
+}
+
 
 
 

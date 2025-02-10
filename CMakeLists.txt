@@ -15,7 +15,8 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_executable(PaintApp main.cpp
-        paint_app.cpp
+        QtPaintApp.h
+        QtPaintApp.cpp
         paint_surface.cpp
         shapes/Shape.h
         shapes/Shape.cpp

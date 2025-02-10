@@ -13,12 +13,12 @@
 
 
 
-class paint_app: public QMainWindow {
+class QtPaintApp: public QMainWindow {
 
     Q_OBJECT;
 
 public:
-    explicit paint_app(QWidget* parent = nullptr);
+    explicit QtPaintApp(QWidget* parent = nullptr);
 
 private:
 

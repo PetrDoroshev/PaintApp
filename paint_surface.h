@@ -7,6 +7,7 @@
 #include <QMenu>
 #include <QImage>
 #include <QMoveEvent>
+#include <QResizeEvent>
 #include "shapes/Shape.h"
 #include "shapes/factory/Factory.h"
 #include "shapes/Manipulator.h"
@@ -43,6 +44,7 @@ protected:
     void mouseMoveEvent(QMouseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
 };
 
 
