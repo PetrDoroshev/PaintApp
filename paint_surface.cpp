@@ -10,22 +10,17 @@
 PaintSurface::PaintSurface(QWidget *parent): QWidget(parent) {
 
     setFocusPolicy(Qt::FocusPolicy::StrongFocus);
+
     painter = Painter(new QtPainterImpl(this));
+    canvas = Canvas(this->width(), this->height());
 }
 
 void PaintSurface::paintEvent(QPaintEvent *event) {
 
     QPainter qt_painter(this);
-    //painter.setRenderHint(QPainter::Antialiasing, true);
-
     qt_painter.fillRect(rect(), QBrush(Qt::white));
     
-    for (auto shape: shapes) {
-        
-        if (shape != nullptr)
-            shape->Draw(painter);
-    }
-    manipulator.Draw(painter);
+    canvas.Draw(painter);
 
 }
 

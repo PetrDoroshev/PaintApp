@@ -15,7 +15,7 @@ namespace shape {
         void Draw(Painter &painter) const override;
         double getArea() const override;
         bool Touch(int mx, int my) const override;
-        Shape *Clone() const override;
+        std::shared_ptr<Shape> Clone() const override;
 
     };
 

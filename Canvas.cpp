@@ -3,8 +3,11 @@
 
 void Canvas::Draw(Painter& painter) const {
 
-    for (auto shape: shapes) {
-        shape->Draw(painter);        
+    if (!shapes.empty()) {
+
+        for (auto shape : shapes) {
+            shape->Draw(painter);
+        }
     }
 }
 
@@ -37,3 +40,19 @@ std::optional<std::shared_ptr<shape::Shape>> Canvas::getShape(uint32_t x, uint32
     
 }
 
+void Canvas::deleteShape(std::shared_ptr<shape::Shape> shape_to_delete) {
+
+    for (auto it = shapes.begin(); it != shapes.end(); it++) {
+        
+        if (*it == shape_to_delete) {
+            shapes.erase(it);
+            break;
+        }
+    }
+}
+
+
+
+ size_t Canvas::getShapesNumber() const {
+    return shapes.size();
+}

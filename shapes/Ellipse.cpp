@@ -26,8 +26,8 @@ namespace shape {
 
     }
 
-    Shape *Ellipse::Clone() const {
-        return new Ellipse(*this);
+    std::shared_ptr<Shape> Ellipse::Clone() const {
+        return std::shared_ptr<Shape> (new Ellipse(*this));
     }
 
 

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QToolBar>
 #include <QVBoxLayout>
 #include <QDockWidget>
@@ -6,7 +7,6 @@
 #include "shapes/Rectangle.h"
 #include "shapes/Triangle.h"
 #include "shapes/Ellipse.h"
-#include <iostream>
 
 using namespace shape;
 
@@ -18,10 +18,10 @@ paint_app::paint_app(QWidget *parent): QMainWindow(parent) {
     paintSurface = new PaintSurface;
     commandManager = new CommandManager;
 
-    name_tool_map = {{"Rect", new DrawTool<Rectangle>(paintSurface, commandManager)},
-                     {"Triangle", new DrawTool<Triangle>(paintSurface, commandManager)},
-                     {"Ellipse", new DrawTool<Ellipse>(paintSurface, commandManager)},
-                     {"Pointer",  new ManipulatorTool(paintSurface, commandManager)}};
+    name_tool_map = {{"Rect", new DrawTool<Rectangle>(&paintSurface->canvas, commandManager)},
+                     {"Triangle", new DrawTool<Triangle>(&paintSurface->canvas, commandManager)},
+                     {"Ellipse", new DrawTool<Ellipse>(&paintSurface->canvas, commandManager)},
+                     {"Pointer",  new ManipulatorTool(&paintSurface->canvas, commandManager)}};
 
     toolbar = addToolBar("main toolbar");
 
@@ -73,9 +73,11 @@ void paint_app::setTool() {
 
 void paint_app::addCustomShape() {
 
-    if (paintSurface->current_tool == name_tool_map["Pointer"]) {
+    auto manipulator_tool = dynamic_cast<ManipulatorTool*> (paintSurface->current_tool);
 
-        auto attached_shape = dynamic_cast<shape::ShapeGroup*>(paintSurface->manipulator.getAttachedShape());
+    if (manipulator_tool) {
+
+        auto attached_shape = dynamic_cast<const shape::ShapeGroup*>(manipulator_tool->getManipulator());
 
         if (attached_shape) {
 
@@ -86,7 +88,7 @@ void paint_app::addCustomShape() {
             customShapeSelect->setCheckable(true);
             toolbar->addAction(customShapeSelect);
 
-            name_tool_map[label.toStdString()] = new DrawTool<ShapeGroup>(paintSurface, commandManager, *attached_shape);
+            name_tool_map[label.toStdString()] = new DrawTool<ShapeGroup>(&paintSurface->canvas, commandManager, *attached_shape);
 
             connect(customShapeSelect, &QAction::triggered, this, &paint_app::setTool);
         }

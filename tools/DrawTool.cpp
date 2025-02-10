@@ -1,15 +1,14 @@
 #include "DrawTool.h"
 
 template<class ShapeType>
-DrawTool<ShapeType>::DrawTool(PaintSurface *paintSurface, CommandManager *commandManager):
-    Tool(paintSurface, commandManager) {
+DrawTool<ShapeType>::DrawTool(Canvas *canvas, CommandManager *commandManager): Tool(canvas, commandManager) {
 
     this->shape_factory = new shape::ShapeFactory<ShapeType>();
 }
 
 template<class ShapeType>
-DrawTool<ShapeType>::DrawTool(PaintSurface *paintSurface, CommandManager *commandManager, ShapeType shape_prototype):
-    Tool(paintSurface, commandManager) {
+DrawTool<ShapeType>::DrawTool(Canvas *canvas, CommandManager *commandManager, ShapeType shape_prototype):
+    Tool(canvas, commandManager) {
 
     this->shape_factory = new PrototypeShapeFactory<ShapeType>(shape_prototype);
 }
@@ -37,15 +36,16 @@ void DrawTool<ShapeType>::onMouseMove(QMouseEvent *event) {
     }
 
     if (begin_draw) {
-        commandManager->ExecuteCommand(new DrawCommand(paintSurface->shapes, shape_factory));
+        commandManager->ExecuteCommand(new DrawCommand(canvas, shape_factory));
         begin_draw = false;
     }
 
-    shape::Shape* shape = *(paintSurface->shapes.end() - 1);
+    
+    std::shared_ptr<shape::Shape> shape = *(canvas->end() - 1);
 
     shape->setPos(std::min(first_x, event->pos().x()), std::min(first_y, event->pos().y()));
     shape->setSize(width, height);
-
+    
 }
 
 template<class ShapeType>

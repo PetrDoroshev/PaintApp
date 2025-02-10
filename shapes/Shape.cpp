@@ -68,7 +68,7 @@ namespace shape {
         this->outline_color = shape.outline_color;
     }
 
-    Shape *Shape::Clone() const {
+    std::shared_ptr<Shape> Shape::Clone() const {
         return nullptr;
     }
 

@@ -12,6 +12,7 @@
 #include "commands/CommandManager.h"
 
 
+
 class paint_app: public QMainWindow {
 
     Q_OBJECT;

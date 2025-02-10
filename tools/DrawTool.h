@@ -20,8 +20,8 @@ private:
 
 public:
 
-    explicit DrawTool(PaintSurface *paintSurface, CommandManager *commandManager);
-    DrawTool(PaintSurface *paintSurface, CommandManager *commandManager, ShapeType shape_prototype);
+    explicit DrawTool(Canvas *canvas, CommandManager *commandManager);
+    DrawTool(Canvas *canvas, CommandManager *commandManager, ShapeType shape_prototype);
 
     void onMousePress(QMouseEvent *event) override;
     void onMouseMove(QMouseEvent *event) override;

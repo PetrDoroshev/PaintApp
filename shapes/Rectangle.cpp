@@ -23,8 +23,8 @@ namespace shape {
         return width * height;
     }
 
-    Shape *Rectangle::Clone() const {
-        return new Rectangle(*this);
+    std::shared_ptr<Shape> Rectangle::Clone() const {
+        return std::shared_ptr<Shape> (new Rectangle(*this));
     }
 
 }

@@ -3,7 +3,7 @@
 
 namespace shape {
 
-    Manipulator::Manipulator(Shape *attachedShape) : attached_shape(attachedShape) {
+    Manipulator::Manipulator(std::shared_ptr<Shape> attachedShape) : attached_shape(attachedShape) {
 
         for (int i = TopLeft; i <= BottomRight; i++) {
             controls[static_cast<controlType>(i)] = Rectangle();
@@ -12,11 +12,11 @@ namespace shape {
         }
     }
 
-    Shape *Manipulator::getAttachedShape() const {
+    std::shared_ptr<Shape> Manipulator::getAttachedShape() const {
         return attached_shape;
     }
 
-    void Manipulator::setAttachedShape(Shape *attachedShape) {
+    void Manipulator::setAttachedShape(std::shared_ptr<Shape> attachedShape) {
         attached_shape = attachedShape;
         Update();
     }

@@ -44,7 +44,7 @@ namespace shape {
 
         virtual void Draw(Painter& painter) const = 0;
 
-        virtual Shape* Clone() const;
+        virtual std::shared_ptr<Shape> Clone() const;
 
         virtual double getArea() const;
 

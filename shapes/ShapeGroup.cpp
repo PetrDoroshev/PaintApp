@@ -4,14 +4,14 @@
 
 void shape::ShapeGroup::Draw(Painter& painter) const {
 
-    for (Shape* shape: shapes) {
+    for (auto shape: shapes) {
         shape->Draw(painter);
     }
 }
 
-void shape::ShapeGroup::Add(shape::Shape *shape) {
+void shape::ShapeGroup::Add(std::shared_ptr<shape::Shape> shape) {
 
-    if (shape == this) {
+    if (shape.get() == this) {
         return;
     }
     if (shape == nullptr) {
@@ -29,20 +29,20 @@ void shape::ShapeGroup::Update() {
 
 
     auto [min_x_it, max_x_it] = std::minmax_element(shapes.begin(), shapes.end(),
-                                                          [](Shape* s1, Shape* s2) {
+                                                          [](std::shared_ptr<Shape> s1, std::shared_ptr<Shape> s2) {
         return s1->getX() < s2->getX();
     });
 
     auto [min_y_it, max_y_it] = std::minmax_element(shapes.begin(), shapes.end(),
-                                  [](Shape* s1, Shape* s2) {
+                                  [](std::shared_ptr<Shape> s1, std::shared_ptr<Shape> s2) {
         return s1->getY() < s2->getY();
     });
 
-    auto max_width_shape = *(std::max_element(shapes.begin(), shapes.end(), [](Shape* s1, Shape* s2) {
+    auto max_width_shape = *(std::max_element(shapes.begin(), shapes.end(), [](std::shared_ptr<Shape> s1, std::shared_ptr<Shape> s2) {
         return s1->getWidth() < s2->getWidth();
     }));
 
-    auto max_height_shape = *(std::max_element(shapes.begin(), shapes.end(), [](Shape* s1, Shape* s2) {
+    auto max_height_shape = *(std::max_element(shapes.begin(), shapes.end(), [](std::shared_ptr<Shape> s1, std::shared_ptr<Shape> s2) {
         return s1->getHeight() < s2->getHeight();
     }));
 
@@ -64,14 +64,14 @@ void shape::ShapeGroup::Clear() {
     shapes.clear();
 }
 
-shape::Shape *shape::ShapeGroup::Clone() const {
+std::shared_ptr<shape::Shape> shape::ShapeGroup::Clone() const {
 
-    return new ShapeGroup(*this);
+    return std::shared_ptr<shape::Shape> (new ShapeGroup(*this));
 }
 
 shape::ShapeGroup::ShapeGroup(const shape::ShapeGroup &shapeGroup) : Shape(shapeGroup) {
 
-    for (Shape* shape: shapeGroup.shapes) {
+    for (auto shape: shapeGroup.shapes) {
         this->Add(shape->Clone());
     }
 
@@ -79,7 +79,7 @@ shape::ShapeGroup::ShapeGroup(const shape::ShapeGroup &shapeGroup) : Shape(shape
 
 void shape::ShapeGroup::setPos(double new_x, double new_y) {
 
-    for (Shape* shape: shapes) {
+    for (auto shape: shapes) {
         shape->setPos(shape->getX() + new_x - x, shape->getY() + new_y - y);
     }
     Shape::setPos(new_x, new_y);
@@ -95,7 +95,7 @@ void shape::ShapeGroup::setSize(double new_width, double new_height) {
     double scale_x = new_width / width;
     double scale_y = new_height / height;
 
-    for (Shape* shape: shapes) {
+    for (auto shape: shapes) {
 
         shape->setSize(shape->getWidth() * scale_x, shape->getHeight() * scale_y);
         shape->setPos(x + (shape->getX() - x) * scale_x, y + (shape->getY() - y) * scale_y);

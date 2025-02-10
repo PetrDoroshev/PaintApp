@@ -22,7 +22,7 @@ namespace shape {
 
         bool Touch(int mx, int my) const override;
 
-        Shape *Clone() const override;
+        std::shared_ptr<Shape> Clone() const override;
     };
 
 } // shape

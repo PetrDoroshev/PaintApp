@@ -7,7 +7,7 @@
 
 
 class Painter {
-
+    
 private:
     PainterImpl* painter_impl;
 
@@ -21,7 +21,7 @@ public:
     void DrawRect(const shape::Rectangle& rect);
     void DrawEllipse(const shape::Ellipse& ellipse);
     void DrawTriangle(const shape::Triangle& triangle);
-
+    
 };
 
 #endif

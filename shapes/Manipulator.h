@@ -13,7 +13,7 @@ namespace shape {
     private:
 
         int control_size = 5;
-        Shape* attached_shape = nullptr;
+        std::shared_ptr<Shape> attached_shape = nullptr;
         controlType selected_control = None;
         std::unordered_map<controlType, Rectangle> controls;
 
@@ -23,11 +23,11 @@ namespace shape {
     
     public:
 
-        explicit Manipulator(Shape *attachedShape);
+        explicit Manipulator(std::shared_ptr<Shape> attachedShape);
 
-        Shape *getAttachedShape() const;
+        std::shared_ptr<Shape> getAttachedShape() const;
         controlType getSelectedControl() const;
-        void setAttachedShape(Shape *attachedShape);
+        void setAttachedShape(std::shared_ptr<Shape> attachedShape);
 
         void Drag(int dx, int dy);
         void Touch(int x, int y);

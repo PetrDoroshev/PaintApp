@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-ManipulatorTool::ManipulatorTool(PaintSurface *paintSurface, CommandManager* commandManager): Tool(paintSurface, commandManager) {}
+ManipulatorTool::ManipulatorTool(Canvas *canvas, CommandManager* commandManager): Tool(canvas, commandManager) {}
 
 void ManipulatorTool::onMousePress(QMouseEvent *event) {
 
@@ -13,17 +13,17 @@ void ManipulatorTool::onMousePress(QMouseEvent *event) {
         int y = event->pos().y();
 
         prev_x = x, prev_y = y;
-        paintSurface->manipulator.Touch(x, y);
+        manipulator.Touch(x, y);
 
         shape::Shape* attached_shape;
 
-        if ((attached_shape = paintSurface->manipulator.getAttachedShape()) != nullptr) {
+        if ((attached_shape = manipulator.getAttachedShape().get()) != nullptr) {
 
-            if (paintSurface->manipulator.getSelectedControl() == Centre) {
+            if (manipulator.getSelectedControl() == Centre) {
 
                 commandManager->ExecuteCommand(new MoveCommand(attached_shape, attached_shape->getX(), attached_shape->getY()));
             }
-            else if (paintSurface->manipulator.getSelectedControl() != None) {
+            else if (manipulator.getSelectedControl() != None) {
 
                 commandManager->ExecuteCommand(new ResizeCommand(attached_shape,
                                                                  attached_shape->getX(),
@@ -41,7 +41,7 @@ void ManipulatorTool::onMouseMove(QMouseEvent *event) {
 
     if (event->buttons() == Qt::MouseButton::LeftButton) {
 
-        paintSurface->manipulator.Drag(event->pos().x() - prev_x, event->pos().y() - prev_y);
+        manipulator.Drag(event->pos().x() - prev_x, event->pos().y() - prev_y);
 
         prev_x = event->pos().x();
         prev_y = event->pos().y();
@@ -61,27 +61,16 @@ void ManipulatorTool::onMouseRelease(QMouseEvent *event) {
 
         prev_x = x, prev_y = y;
 
-        double min_area = paintSurface->width() * paintSurface->height();
-        shape::Shape *min_area_shape = nullptr;
+        auto min_area_shape = canvas->getShape(x, y);
 
-        for (auto shape: paintSurface->shapes) {
-
-            if (shape->Touch(x, y)) {
-
-                if (shape->getArea() < min_area) {
-                    min_area = shape->getArea();
-                    min_area_shape = shape;
-                }
-            }
-        }
-        if (min_area_shape != nullptr) {
+        if (min_area_shape.has_value()) {
 
             if (ctrl_pressed) {
-                shape_group.Add(min_area_shape);
-                paintSurface->manipulator.setAttachedShape(&shape_group);
+                shape_group.Add(min_area_shape.value());
+                manipulator.setAttachedShape(std::shared_ptr<shape::Shape>(&shape_group));
             } 
             else {
-                paintSurface->manipulator.setAttachedShape(min_area_shape);
+                manipulator.setAttachedShape(min_area_shape.value());
             }
         } 
         else {

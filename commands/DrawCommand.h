@@ -2,12 +2,13 @@
 #define PAINTAPP_DRAWCOMMAND_H
 
 #include "Command.h"
+#include "../Canvas.h"
 #include "../shapes/factory/Factory.h"
 
 class DrawCommand: public Command {
 public:
 
-    DrawCommand(std::vector<shape::Shape *> &shapes, shape::Factory *shapeFactory);
+    DrawCommand(Canvas* canvas, shape::Factory *shapeFactory);
 
     void Execute() override;
     void unExecute() override;
@@ -16,8 +17,8 @@ public:
 
 
 private:
-    std::vector<shape::Shape *>& shapes;
-    shape::Shape* created_shape = nullptr;
+    Canvas* canvas;
+    std::shared_ptr<shape::Shape> created_shape = nullptr;
     shape::Factory* shape_factory = nullptr;
 };
 

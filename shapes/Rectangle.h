@@ -20,7 +20,7 @@ namespace shape {
 
         double getArea() const override;
 
-        Shape *Clone() const override;
+        std::shared_ptr<Shape> Clone() const override;
 
     };
 }

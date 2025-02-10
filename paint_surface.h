@@ -13,6 +13,7 @@
 #include "tools/ManipulatorTool.h"
 #include "painter/Painter.h"
 #include "painter/QtPainterImpl.h"
+#include "Canvas.h"
 
 class Tool;
 
@@ -26,9 +27,7 @@ private:
 public:
     explicit PaintSurface(QWidget* parent = nullptr);
 
-    shape::Manipulator manipulator = shape::Manipulator(nullptr);
-    std::vector<shape::Shape*> shapes;
-    
+    Canvas canvas;
     QColor outline_color;
     QColor fill_color;
     Tool* current_tool = nullptr;
