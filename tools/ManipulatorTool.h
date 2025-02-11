@@ -16,8 +16,8 @@ private:
     bool is_click = true;
     bool ctrl_pressed = false;
 
-    shape::Manipulator manipulator = shape::Manipulator(nullptr);
-    shape::ShapeGroup shape_group = shape::ShapeGroup();
+    std::shared_ptr<shape::Manipulator> manipulator = std::shared_ptr<shape::Manipulator>(new shape::Manipulator(nullptr));
+    std::shared_ptr<shape::ShapeGroup> shape_group = std::shared_ptr<shape::ShapeGroup>(new shape::ShapeGroup());
 
 public:
 
@@ -29,7 +29,7 @@ public:
     void onKeyPress(QKeyEvent *event) override;
     void onKeyRelease(QKeyEvent *event) override;
 
-    const shape::Manipulator* getManipulator() const { return &manipulator; } 
+    const shape::Manipulator* getManipulator() const { return manipulator.get(); } 
 };
 
 

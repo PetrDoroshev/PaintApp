@@ -23,9 +23,7 @@ namespace shape {
 
     void Manipulator::Draw(Painter& painter) const {
 
-        if (attached_shape == nullptr){
-            return;
-        }
+        if (!attached_shape) return;
         
         painter.DrawRect(Rectangle(x, y, width, height, Color(0, 0, 0, 255), Color(255, 255, 255, 0)));
 
@@ -73,6 +71,8 @@ namespace shape {
     }
 
     void Manipulator::Drag(int dx, int dy) {
+
+        if (!attached_shape) return;
 
         int dw, dh;
 
