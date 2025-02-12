@@ -38,10 +38,8 @@ namespace shape {
 
     void Manipulator::Update() {
 
-        if (attached_shape == nullptr) {
-            return;
-        }
-
+        if (!attached_shape) return;
+        
         this->setPos(attached_shape->getX() , attached_shape->getY());
         this->setSize(attached_shape->getWidth(), attached_shape->getHeight());
 
@@ -128,8 +126,15 @@ namespace shape {
         double new_width = attached_shape->getWidth() + dw;
         double new_height = attached_shape->getHeight() + dh;
 
-        attached_shape->setPos(attached_shape->getX() + dx, attached_shape->getY() + dy);
+        double new_x = attached_shape->getX() + dx;
+        double new_y = attached_shape->getY() + dy;
+
+       
+        attached_shape->setPos(std::fmin(attached_shape->getX() + attached_shape->getWidth() - 10, new_x), 
+                               std::fmin(attached_shape->getY() + attached_shape->getHeight() - 10, new_y));
+
         attached_shape->setSize(std::fmax(10, new_width), std::fmax(10, new_height));
+        
 
         Update();
     }
