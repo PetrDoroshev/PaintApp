@@ -41,6 +41,6 @@ void QtPainterImpl::DrawPoly(const std::vector<PointF>& points){
         q_points[i] = QPointF(points[i].x, points[i].y);
     }
 
-    painter.drawConvexPolygon(QPolygonF(q_points));
+    painter.drawPolygon(QPolygonF(q_points));
 
 }

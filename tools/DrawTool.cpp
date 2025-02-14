@@ -18,8 +18,8 @@ void DrawTool<ShapeType>::onMousePress(QMouseEvent *event) {
 
     if (event->button() == Qt::MouseButton::LeftButton) {
 
-        first_x = event->pos().x();
-        first_y = event->pos().y();
+        press_x = event->pos().x();
+        press_y = event->pos().y();
 
         begin_draw = true;
     }
@@ -28,8 +28,8 @@ void DrawTool<ShapeType>::onMousePress(QMouseEvent *event) {
 template<class ShapeType>
 void DrawTool<ShapeType>::onMouseMove(QMouseEvent *event) {
 
-    double width = abs(event->pos().x() - first_x);
-    double height = abs(event->pos().y() - first_y);
+    double width = event->pos().x() - press_x;
+    double height = event->pos().y() - press_y;
 
     if (width == 0 || height == 0) {
         return;
@@ -41,9 +41,9 @@ void DrawTool<ShapeType>::onMouseMove(QMouseEvent *event) {
     }
 
     
-    std::shared_ptr<shape::Shape> shape = *(canvas->end() - 1);
+    auto shape = *(canvas->end() - 1);
 
-    shape->setPos(std::min(first_x, event->pos().x()), std::min(first_y, event->pos().y()));
+    shape->setPos(std::min(press_x, event->pos().x()), std::min(press_y, event->pos().y()));
     shape->setSize(width, height);
     
 }

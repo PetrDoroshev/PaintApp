@@ -6,24 +6,22 @@ namespace shape {
     Triangle::Triangle() = default;
 
     void Triangle::Draw(Painter& painter) const {
-        /*
-        QPen pen(Qt::black, 5, Qt::SolidLine, Qt::RoundCap, Qt::MiterJoin);
-        painter.setPen(pen);
-
-        QPointF points[3] = {
-                QPointF(x, y + height),
-                QPointF(x + width / 2, y),
-                QPointF(x + width, y + height)
-        };
-
-        painter.drawPolygon(points, 3);
-        */
-
+       
         painter.DrawTriangle(*this);
+    }
+
+    void Triangle::setPos(double new_x, double new_y)
+    {   
+        Shape::setPos(new_x, new_y);
+
     }
 
     double Triangle::getArea() const {
         return height * width / 2.0;
+    }
+
+    std::array<PointF, 3> Triangle::getPoints() const {
+        return points;
     }
 
     bool Triangle::Touch(int mx, int my) const {

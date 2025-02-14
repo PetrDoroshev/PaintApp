@@ -7,6 +7,7 @@ struct PointF {
     double y;
 
     PointF(double x, double y) : x(x), y(y) {};
+    PointF() { x = 0.0; y = 0.0; };
 
 };
 

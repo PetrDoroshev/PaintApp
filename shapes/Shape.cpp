@@ -73,11 +73,11 @@ namespace shape {
     }
 
     void Shape::setWidth(double width) {
-        Shape::width = width;
+        Shape::width = std::abs(width);
     }
 
     void Shape::setHeight(double height) {
-        Shape::height = height;
+        Shape::height = std::abs(height);
     }
 
     void Shape::setPos(double new_x, double new_y) {

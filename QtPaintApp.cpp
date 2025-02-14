@@ -72,11 +72,11 @@ void QtPaintApp::setTool() {
 
 void QtPaintApp::addCustomShape() {
 
-    auto manipulator_tool = dynamic_cast<ManipulatorTool*> (paintSurface->current_tool);
+    auto manipulator_tool = dynamic_cast<ManipulatorTool*>(paintSurface->current_tool);
 
     if (manipulator_tool) {
 
-        auto attached_shape = dynamic_cast<const shape::ShapeGroup*>(manipulator_tool->getManipulator());
+        auto attached_shape = dynamic_cast<shape::ShapeGroup*>(manipulator_tool->getManipulator()->getAttachedShape().get());
 
         if (attached_shape) {
 

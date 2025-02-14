@@ -12,8 +12,8 @@ class DrawTool: public Tool {
 
 private:
     shape::Factory* shape_factory = nullptr;
-    int first_x = 0;
-    int first_y = 0;
+    int press_x = 0;
+    int press_y = 0;
     int prev_x = 0;
     int prev_y = 0;
     bool begin_draw = false;
