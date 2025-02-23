@@ -7,15 +7,25 @@
 #include "../painter/Painter.h"
 
 namespace shape {
-    
+
+    const double MIN_X = 0.0;
+    const double MIN_Y = 0.0;
+    const double MIN_WIDTH = 1.0;
+    const double MIN_HEIGHT = 1.0;
+
     class Shape {
 
     public:
         Shape(double x, double y, double width, double height, const Color& outline_color);
+
         Shape(double x, double y, double width, double height, const Color& outline_color, const Color& fill_color);
+
         Shape(const Shape& shape);
+
         Shape(uint32_t x, uint32_t y);
+
         Shape(uint32_t x, uint32_t y, double width, double height);
+
         Shape();
 
         virtual ~Shape() = default;
@@ -38,11 +48,11 @@ namespace shape {
 
         Color getFillColor() const;
 
-        void setOutlineColor(const Color &outlineColor);
+        void setOutlineColor(const Color& outlineColor);
 
         virtual bool Touch(int mx, int my) const;
 
-        virtual void Draw(Painter& painter) const = 0;
+        virtual void Draw(Painter& painter) = 0;
 
         virtual std::shared_ptr<Shape> Clone() const;
 
@@ -54,13 +64,13 @@ namespace shape {
 
     protected:
 
-        double x = 0;
-        double y = 0;
-        double width = 0;
-        double height = 0;
+        double x;
+        double y;
+        double width;
+        double height;
         Color outline_color = Color(0, 0, 0, 255);
         Color fill_color = Color(0, 0, 0, 0);
     };
-}
+};
 
 #endif //PAINTAPP_SHAPE_H

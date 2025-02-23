@@ -15,13 +15,13 @@ namespace shape {
                                                                                           fill_color(fill_color){}
     
 
-    Shape::Shape(uint32_t x, uint32_t y) : x(x), y(y) {}
+    Shape::Shape(uint32_t x, uint32_t y) : x(x), y(y), width(MIN_WIDTH), height(MIN_HEIGHT) {}
 
     Shape::Shape(uint32_t x, uint32_t y, double width, double height): x(x), y(y), width(width), height(height) 
     {
     }
 
-    Shape::Shape()= default;
+    Shape::Shape() : x(MIN_X), y(MIN_Y), width(MIN_WIDTH), height(MIN_HEIGHT) {};
 
     double Shape::getX() const {
         return x;

@@ -2,7 +2,7 @@
 
 namespace shape {
     
-    Rectangle::Rectangle() {}
+    Rectangle::Rectangle(): Shape::Shape() {}
     Rectangle::Rectangle(double x, double y, double width, double height,
                          const Color &outlineColor) : Shape(x, y, width, height, outlineColor) {}
 
@@ -13,7 +13,7 @@ namespace shape {
                          const Color &outlineColor, const Color& fill_color) : Shape(x, y, width, height, outlineColor, fill_color) {}
 
   
-    void Rectangle::Draw(Painter& painter) const {
+    void Rectangle::Draw(Painter& painter) {
 
         painter.DrawRect(*this);
     }

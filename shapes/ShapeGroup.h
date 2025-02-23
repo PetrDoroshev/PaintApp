@@ -10,7 +10,7 @@ namespace shape {
 
         ShapeGroup(const ShapeGroup& shapeGroup);
 
-        void Draw(Painter &painter) const override;
+        void Draw(Painter &painter) override;
 
         void Add(std::shared_ptr<Shape> shape);
 

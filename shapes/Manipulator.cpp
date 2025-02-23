@@ -1,4 +1,5 @@
 #include "Manipulator.h"
+#include "float.h"
 #include <iostream>
 
 namespace shape {
@@ -12,7 +13,7 @@ namespace shape {
         }
     }
 
-    std::shared_ptr<Shape> Manipulator::getAttachedShape() const {
+    std::weak_ptr<Shape> Manipulator::getAttachedShape() const {
         return attached_shape;
     }
 
@@ -21,9 +22,16 @@ namespace shape {
         Update();
     }
 
-    void Manipulator::Draw(Painter& painter) const {
+    void Manipulator::Draw(Painter& painter) {
 
-        if (!attached_shape) return;
+        
+        auto shape = attached_shape.lock();
+
+        if (!shape) return;
+
+        if (shape->getWidth() != width || shape->getHeight() != height || shape->getX() != x || shape->getY() != y) {
+            Update();
+        }
         
         painter.DrawRect(Rectangle(x, y, width, height, Color(0, 0, 0, 255), Color(255, 255, 255, 0)));
 
@@ -38,12 +46,13 @@ namespace shape {
 
     void Manipulator::Update() {
 
-        if (!attached_shape) return;
-        
-        this->setPos(attached_shape->getX() , attached_shape->getY());
-        this->setSize(attached_shape->getWidth(), attached_shape->getHeight());
+        if (auto shape = attached_shape.lock()) {
 
-        updateControls();
+            this->setPos(shape->getX(), shape->getY());
+            this->setSize(shape->getWidth(), shape->getHeight());
+
+            updateControls();
+        }
     }
 
     void Manipulator::updateControls() {
@@ -69,8 +78,10 @@ namespace shape {
     }
 
     void Manipulator::Drag(int dx, int dy) {
+            
+        auto shape = attached_shape.lock();
 
-        if (!attached_shape) return;
+        if (!shape) return;
 
         int dw, dh;
 
@@ -123,17 +134,17 @@ namespace shape {
                 return;
         }
 
-        double new_width = attached_shape->getWidth() + dw;
-        double new_height = attached_shape->getHeight() + dh;
+        double new_width = shape->getWidth() + dw;
+        double new_height = shape->getHeight() + dh;
 
-        double new_x = attached_shape->getX() + dx;
-        double new_y = attached_shape->getY() + dy;
+        double new_x = shape->getX() + dx;
+        double new_y = shape->getY() + dy;
 
        
-        attached_shape->setPos(std::fmin(attached_shape->getX() + attached_shape->getWidth() - 10, new_x), 
-                               std::fmin(attached_shape->getY() + attached_shape->getHeight() - 10, new_y));
+        shape->setPos(std::fmin(dw != 0 ? shape->getX() + shape->getWidth() - 10 : DBL_MAX, new_x), 
+                     std::fmin(dh != 0 ? shape->getY() + shape->getHeight() - 10 : DBL_MAX, new_y));
 
-        attached_shape->setSize(std::fmax(10, new_width), std::fmax(10, new_height));
+        shape->setSize(std::fmax(shape::MIN_WIDTH * 10, new_width), std::fmax(shape::MIN_HEIGHT * 10, new_height));
         
 
         Update();
@@ -150,7 +161,7 @@ namespace shape {
         }
 
         if (selected_control == None) {
-            attached_shape = nullptr;
+            attached_shape.reset();
         }
     }
 

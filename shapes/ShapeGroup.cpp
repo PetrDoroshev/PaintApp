@@ -2,7 +2,7 @@
 #include <iostream>
 #include <limits>
 
-void shape::ShapeGroup::Draw(Painter& painter) const {
+void shape::ShapeGroup::Draw(Painter& painter) {
 
     for (auto shape: shapes) {
         shape->Draw(painter);
@@ -29,12 +29,12 @@ void shape::ShapeGroup::Update() {
 
 
     auto [min_x_it, max_x_it] = std::minmax_element(shapes.begin(), shapes.end(),
-                                                          [](std::shared_ptr<Shape> s1, std::shared_ptr<Shape> s2) {
+                                                    [](std::shared_ptr<Shape> s1, std::shared_ptr<Shape> s2) {
         return s1->getX() < s2->getX();
     });
 
     auto [min_y_it, max_y_it] = std::minmax_element(shapes.begin(), shapes.end(),
-                                  [](std::shared_ptr<Shape> s1, std::shared_ptr<Shape> s2) {
+                                                    [](std::shared_ptr<Shape> s1, std::shared_ptr<Shape> s2) {
         return s1->getY() < s2->getY();
     });
 
@@ -87,13 +87,8 @@ void shape::ShapeGroup::setPos(double new_x, double new_y) {
 
 void shape::ShapeGroup::setSize(double new_width, double new_height) {
 
-    //new_width = fmax(10.0, new_width);
-    //new_height = fmax(10.0, new_height);
-
-    std::cout << new_width << ", " << new_height << std::endl;
-
-    double scale_x = new_width / width;
-    double scale_y = new_height / height;
+    double scale_x = std::abs(new_width) / width;
+    double scale_y = std::abs(new_height) / height;
 
     for (auto shape: shapes) {
 

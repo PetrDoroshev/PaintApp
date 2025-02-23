@@ -76,7 +76,7 @@ void QtPaintApp::addCustomShape() {
 
     if (manipulator_tool) {
 
-        auto attached_shape = dynamic_cast<shape::ShapeGroup*>(manipulator_tool->getManipulator()->getAttachedShape().get());
+        auto attached_shape = dynamic_cast<shape::ShapeGroup*>(manipulator_tool->getManipulator()->getAttachedShape().lock().get());
 
         if (attached_shape) {
 

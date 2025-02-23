@@ -10,21 +10,23 @@
 
 namespace shape {
 
-    class Triangle: public Shape {
+    class Triangle : public Shape {
     private:
 
         std::array<PointF, 3> points;
+        
+        void computePoints();
 
     public:
-        Triangle(double x, double y, double width, double height, const Color &outlineColor);
-        Triangle(const Triangle& triangle) : Shape(triangle) {};
+        Triangle(double x, double y, double width, double height, const Color& outlineColor);
+        Triangle(const Triangle& triangle);
         Triangle();
 
-        void Draw(Painter &painter) const override;
+        void Draw(Painter &painter) override;
 
         void setPos(double new_x, double new_y) override;
 
-        //void setSize(double new_width, double new_height) override;
+        void setSize(double new_width, double new_height) override;
 
         double getArea() const override;
 

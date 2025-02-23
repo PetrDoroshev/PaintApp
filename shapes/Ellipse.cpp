@@ -6,9 +6,9 @@ namespace shape {
                                                                                                           width,
                                                                                                           height,
                                                                                                           outlineColor) {}
-    Ellipse::Ellipse() {}
+    Ellipse::Ellipse(): Shape() {}
 
-    void Ellipse::Draw(Painter& painter) const {
+    void Ellipse::Draw(Painter& painter) {
            
         painter.DrawEllipse(*this);
     }

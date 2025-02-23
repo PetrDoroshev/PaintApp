@@ -18,6 +18,7 @@ public:
 
 
     Tool(Canvas *canvas, CommandManager *commandManager) : canvas(canvas), commandManager(commandManager) {}
+    virtual ~Tool() = default;
 
     virtual void onMousePress(QMouseEvent *event) = 0;
     virtual void onMouseMove(QMouseEvent *event) = 0;

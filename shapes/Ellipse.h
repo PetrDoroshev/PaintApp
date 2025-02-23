@@ -12,7 +12,7 @@ namespace shape {
         Ellipse(double x, double y, double width, double height, const Color& outlineColor);
         Ellipse();
         Ellipse(const Ellipse &ellipse) : Shape(ellipse) {};
-        void Draw(Painter &painter) const override;
+        void Draw(Painter &painter) override;
         double getArea() const override;
         bool Touch(int mx, int my) const override;
         std::shared_ptr<Shape> Clone() const override;

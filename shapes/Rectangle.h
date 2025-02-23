@@ -16,7 +16,7 @@ namespace shape {
         
         explicit Rectangle(const Rectangle &rectangle) : Shape(rectangle) {};
 
-        void Draw(Painter &painter) const override;
+        void Draw(Painter &painter) override; 
 
         double getArea() const override;
 

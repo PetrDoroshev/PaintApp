@@ -17,7 +17,7 @@ void ManipulatorTool::onMousePress(QMouseEvent *event) {
 
         shape::Shape* attached_shape;
 
-        if ((attached_shape = manipulator->getAttachedShape().get()) != nullptr) {
+        if ((attached_shape = manipulator->getAttachedShape().lock().get()) != nullptr) {
 
             if (manipulator->getSelectedControl() == Centre) {
 
