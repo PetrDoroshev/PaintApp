@@ -5,3 +5,8 @@ A vector graphics editor that allows you to combine 2D primitives to create more
 - Qt 6.9+
 - Cmake 3.26+
 ## How to build
+1. '''cd PaintApp'''
+2. '''mkdir build '''
+3. '''cd build'''
+4. '''cmake ../'''
+5. '''make'''
