@@ -10,4 +10,5 @@ A vector graphics editor that allows you to combine 2D primitives to create more
 3. ```cd build```
 4. ```cmake ../```
 5. ```make```
+## Screenshots
 <img width="646" height="512" alt="image" src="https://github.com/user-attachments/assets/23e86e3e-49cf-4509-b002-b025a0eff22b" />
