@@ -56,7 +56,11 @@ namespace shape {
     }
 
     bool Shape::Touch(int mx, int my) const {
-        return (mx > x && mx < x + width && my > y && my < y + height);
+        
+        return (mx > x && 
+                mx < x + width && 
+                my > y && 
+                my < y + height);
     }
 
     Shape::Shape(const Shape& shape) {

@@ -69,6 +69,7 @@ namespace shape {
     }
 
     std::shared_ptr<Shape> Triangle::Clone() const {
+        
         return std::shared_ptr<Shape> (new Triangle(*this));
     }
 } // shape
