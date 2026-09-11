@@ -36,7 +36,7 @@ void DrawTool<ShapeType>::onMouseMove(QMouseEvent *event) {
     }
 
     if (begin_draw) {
-        commandManager->ExecuteCommand(new DrawCommand(canvas, shape_factory));
+        commandManager->ExecuteCommand(std::make_unique<DrawCommand>(canvas, shape_factory));
         begin_draw = false;
     }
 

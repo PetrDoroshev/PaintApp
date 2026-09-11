@@ -1,9 +1,13 @@
 #include "CommandManager.h"
 
-void CommandManager::ExecuteCommand(Command* command) {
+void CommandManager::ExecuteCommand(std::unique_ptr<Command> command) {
+
+    if (!command) {
+        return;
+    }
 
     command->Execute();
-    command_stack.push(command);
+    command_stack.push(std::move(command));
 }
 
 void CommandManager::unExecuteCommand() {
@@ -12,9 +16,6 @@ void CommandManager::unExecuteCommand() {
         return;
     }
 
-    auto command = command_stack.top();
-    command->unExecute();
+    command_stack.top()->unExecute();
     command_stack.pop();
-
-    delete command;
 }

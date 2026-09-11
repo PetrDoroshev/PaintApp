@@ -21,11 +21,13 @@ void ManipulatorTool::onMousePress(QMouseEvent *event) {
 
             if (manipulator->getSelectedControl() == Centre) {
 
-                commandManager->ExecuteCommand(new MoveCommand(attached_shape, attached_shape->getX(), attached_shape->getY()));
+                commandManager->ExecuteCommand(std::make_unique<MoveCommand>(
+                    attached_shape, attached_shape->getX(), attached_shape->getY())
+                );
             }
             else if (manipulator->getSelectedControl() != None) {
 
-                commandManager->ExecuteCommand(new ResizeCommand(attached_shape,
+                commandManager->ExecuteCommand(std::make_unique<ResizeCommand>(attached_shape,
                                                                  attached_shape->getX(),
                                                                  attached_shape->getY(),
                                                                  attached_shape->getWidth(),

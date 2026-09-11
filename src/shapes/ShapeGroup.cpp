@@ -26,7 +26,11 @@ void shape::ShapeGroup::Add(std::shared_ptr<shape::Shape> shape) {
 }
 
 void shape::ShapeGroup::Update() {
-
+  
+    if (shapes.empty()) {
+        return;
+    }
+    
 
     auto [min_x_it, max_x_it] = std::minmax_element(shapes.begin(), shapes.end(),
                                                     [](std::shared_ptr<Shape> s1, std::shared_ptr<Shape> s2) {
