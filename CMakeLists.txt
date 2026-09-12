@@ -13,6 +13,7 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_executable(PaintApp src/main.cpp
+        resources/resources.qrc
         src/QtPaintApp.h
         src/QtPaintApp.cpp
         src/paint_surface.cpp

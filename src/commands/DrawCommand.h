@@ -8,7 +8,7 @@
 class DrawCommand: public Command {
 public:
 
-    DrawCommand(Canvas* canvas, shape::Factory *shapeFactory);
+    DrawCommand(Canvas& canvas, std::shared_ptr<shape::Shape> createdShape);
 
     void Execute() override;
     void unExecute() override;
@@ -17,9 +17,9 @@ public:
 
 
 private:
-    Canvas* canvas;
+    Canvas& canvas;
     std::shared_ptr<shape::Shape> created_shape = nullptr;
-    shape::Factory* shape_factory = nullptr;
+
 };
 
 

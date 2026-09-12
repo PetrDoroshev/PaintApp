@@ -7,15 +7,15 @@ void CommandManager::ExecuteCommand(std::unique_ptr<Command> command) {
     }
 
     command->Execute();
-    command_stack.push(std::move(command));
+    undo_stack.push(std::move(command));
 }
 
 void CommandManager::unExecuteCommand() {
 
-    if (command_stack.empty()) {
+    if (undo_stack.empty()) {
         return;
     }
 
-    command_stack.top()->unExecute();
-    command_stack.pop();
+    undo_stack.top()->unExecute();
+    undo_stack.pop();
 }

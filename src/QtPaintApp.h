@@ -25,7 +25,7 @@ private:
     int custom_shape_num = 0;
 
     PaintSurface* paintSurface;
-    CommandManager* commandManager;
+    CommandManager commandManager;
     std::unordered_map<std::string, Tool*> name_tool_map;
 
     QToolBar *toolbar;

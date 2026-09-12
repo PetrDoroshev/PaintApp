@@ -11,7 +11,7 @@ template<class ShapeType>
 class DrawTool: public Tool {
 
 private:
-    shape::Factory* shape_factory = nullptr;
+    std::unique_ptr<shape::Factory> shape_factory;
     int press_x = 0;
     int press_y = 0;
     int prev_x = 0;
@@ -20,8 +20,8 @@ private:
 
 public:
 
-    explicit DrawTool(Canvas *canvas, CommandManager *commandManager);
-    DrawTool(Canvas *canvas, CommandManager *commandManager, ShapeType shape_prototype);
+    explicit DrawTool(Canvas& canvas, CommandManager& commandManager);
+    DrawTool(Canvas& canvas, CommandManager& commandManager, ShapeType shape_prototype);
 
     void onMousePress(QMouseEvent *event) override;
     void onMouseMove(QMouseEvent *event) override;

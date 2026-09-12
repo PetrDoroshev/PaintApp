@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-ManipulatorTool::ManipulatorTool(Canvas *canvas, CommandManager* commandManager): Tool(canvas, commandManager) {}
+ManipulatorTool::ManipulatorTool(Canvas& canvas, CommandManager& commandManager): Tool(canvas, commandManager) {}
 
 void ManipulatorTool::onMousePress(QMouseEvent *event) {
 
@@ -21,13 +21,13 @@ void ManipulatorTool::onMousePress(QMouseEvent *event) {
 
             if (manipulator->getSelectedControl() == Centre) {
 
-                commandManager->ExecuteCommand(std::make_unique<MoveCommand>(
+                commandManager.ExecuteCommand(std::make_unique<MoveCommand>(
                     attached_shape, attached_shape->getX(), attached_shape->getY())
                 );
             }
             else if (manipulator->getSelectedControl() != None) {
 
-                commandManager->ExecuteCommand(std::make_unique<ResizeCommand>(attached_shape,
+                commandManager.ExecuteCommand(std::make_unique<ResizeCommand>(attached_shape,
                                                                  attached_shape->getX(),
                                                                  attached_shape->getY(),
                                                                  attached_shape->getWidth(),
@@ -63,7 +63,7 @@ void ManipulatorTool::onMouseRelease(QMouseEvent *event) {
 
         prev_x = x, prev_y = y;
 
-            auto min_area_shape = canvas->getShape(x, y);
+            auto min_area_shape = canvas.getShape(x, y);
 
         if (min_area_shape.has_value()) {
 
@@ -75,15 +75,15 @@ void ManipulatorTool::onMouseRelease(QMouseEvent *event) {
                 manipulator->setAttachedShape(min_area_shape.value());
                
             }
-            canvas->deleteShape(manipulator);
-            canvas->Add(manipulator);
+            canvas.deleteShape(manipulator);
+            canvas.Add(manipulator);
         } 
         else {
             shape_group->Clear();
-            canvas->deleteShape(manipulator);
+            canvas.deleteShape(manipulator);
         }
     }
-    std::cout << canvas->getShapesNumber() << std::endl;
+    std::cout << canvas.getShapesNumber() << std::endl;
 }
 
 void ManipulatorTool::onKeyPress(QKeyEvent *event) {

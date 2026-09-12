@@ -13,7 +13,6 @@ public:
 
     void unExecute() override;
 
-
 private:
 
     shape::Shape* modified_shape;

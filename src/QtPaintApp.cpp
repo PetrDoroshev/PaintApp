@@ -1,5 +1,6 @@
 #include <iostream>
 #include <QToolBar>
+#include <QIcon>
 #include <QVBoxLayout>
 #include <QDockWidget>
 #include "QtPaintApp.h"
@@ -13,22 +14,25 @@ using namespace shape;
 QtPaintApp::QtPaintApp(QWidget *parent): QMainWindow(parent) {
 
     setGeometry(100, 100, 640, 480);
-    //setFocusPolicy(Qt::FocusPolicy::StrongFocus);
 
     paintSurface = new PaintSurface;
-    commandManager = new CommandManager;
 
-    name_tool_map = {{"Rect", new DrawTool<Rectangle>(&paintSurface->canvas, commandManager)},
-                     {"Triangle", new DrawTool<Triangle>(&paintSurface->canvas, commandManager)},
-                     {"Ellipse", new DrawTool<Ellipse>(&paintSurface->canvas, commandManager)},
-                     {"Pointer",  new ManipulatorTool(&paintSurface->canvas, commandManager)}};
+    name_tool_map = {{"Rect", new DrawTool<Rectangle>(paintSurface->canvas, commandManager)},
+                     {"Triangle", new DrawTool<Triangle>(paintSurface->canvas, commandManager)},
+                     {"Ellipse", new DrawTool<Ellipse>(paintSurface->canvas, commandManager)},
+                     {"Pointer",  new ManipulatorTool(paintSurface->canvas, commandManager)}};
 
     toolbar = addToolBar("main toolbar");
 
-    auto* rectSelect = new QAction("Rect", this);
-    auto* triangleSelect = new QAction("Triangle", this);
-    auto* ellipseSelect = new QAction("Ellipse", this);
-    auto* pointerSelect = new QAction("Pointer", this);
+    auto* rectSelect = new QAction(QIcon(":/icons/icons/rectangle.svg"), "Rect", this);
+    auto* triangleSelect = new QAction(QIcon(":/icons/icons/triangle.svg"), "Triangle", this);
+    auto* ellipseSelect = new QAction(QIcon(":/icons/icons/ellipse.svg"), "Ellipse", this);
+    auto* pointerSelect = new QAction(QIcon(":/icons/icons/pointer.svg"), "Pointer", this);
+
+    rectSelect->setToolTip("Rectangle");
+    triangleSelect->setToolTip("Triangle");
+    ellipseSelect->setToolTip("Ellipse");
+    pointerSelect->setToolTip("Select and transform");
 
     rectSelect->setCheckable(true);
     triangleSelect->setCheckable(true);
@@ -44,6 +48,7 @@ QtPaintApp::QtPaintApp(QWidget *parent): QMainWindow(parent) {
     toolbar->addAction(triangleSelect);
     toolbar->addAction(ellipseSelect);
     toolbar->addAction(pointerSelect);
+    toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
     setCentralWidget(paintSurface);
 
@@ -83,11 +88,12 @@ void QtPaintApp::addCustomShape() {
             custom_shape_num++;
 
             QString label = QString("CustomShape%1").arg(custom_shape_num);
-            auto* customShapeSelect = new QAction(label, this);
+            auto* customShapeSelect = new QAction(QIcon(":/icons/icons/custom-shape.svg"), label, this);
             customShapeSelect->setCheckable(true);
+            customShapeSelect->setToolTip(label);
             toolbar->addAction(customShapeSelect);
 
-            name_tool_map[label.toStdString()] = new DrawTool<ShapeGroup>(&paintSurface->canvas, commandManager, *attached_shape);
+            name_tool_map[label.toStdString()] = new DrawTool<ShapeGroup>(paintSurface->canvas, commandManager, *attached_shape);
 
             connect(customShapeSelect, &QAction::triggered, this, &QtPaintApp::setTool);
         }
@@ -104,10 +110,9 @@ void QtPaintApp::contextMenuEvent(QContextMenuEvent *event) {
 void QtPaintApp::keyPressEvent(QKeyEvent *event) {
 
     if (event->key() == Qt::Key::Key_Z && event->modifiers() == Qt::Modifier::CTRL) {
-        commandManager->unExecuteCommand();
+        commandManager.unExecuteCommand();
         paintSurface->Update();
     }
 
 
 }
-

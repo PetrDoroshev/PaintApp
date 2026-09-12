@@ -8,6 +8,7 @@ namespace shape {
     class Factory {
     public:
         virtual Shape* Create() const = 0;
+        virtual ~Factory(){};
     };
 }
 

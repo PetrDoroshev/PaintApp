@@ -11,13 +11,13 @@ class PaintSurface;
 class Tool {
 
 protected:
-    Canvas* canvas = nullptr;
-    CommandManager* commandManager = nullptr;
+    Canvas& canvas;
+    CommandManager& commandManager;
 
 public:
 
 
-    Tool(Canvas *canvas, CommandManager *commandManager) : canvas(canvas), commandManager(commandManager) {}
+    Tool(Canvas& canvas, CommandManager& commandManager) : canvas(canvas), commandManager(commandManager) {}
     virtual ~Tool() = default;
 
     virtual void onMousePress(QMouseEvent *event) = 0;

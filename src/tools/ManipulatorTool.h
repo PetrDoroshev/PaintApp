@@ -16,12 +16,12 @@ private:
     bool is_click = true;
     bool ctrl_pressed = false;
 
-    std::shared_ptr<shape::Manipulator> manipulator = std::shared_ptr<shape::Manipulator>(new shape::Manipulator(nullptr));
-    std::shared_ptr<shape::ShapeGroup> shape_group = std::shared_ptr<shape::ShapeGroup>(new shape::ShapeGroup());
+    std::shared_ptr<shape::Manipulator> manipulator = std::make_shared<shape::Manipulator>(nullptr);
+    std::shared_ptr<shape::ShapeGroup> shape_group = std::make_shared<shape::ShapeGroup>();
 
 public:
 
-    explicit ManipulatorTool(Canvas* canvas, CommandManager* commandManager);
+    explicit ManipulatorTool(Canvas& canvas, CommandManager& commandManager);
 
     void onMousePress(QMouseEvent *event) override;
     void onMouseMove(QMouseEvent *event) override;
